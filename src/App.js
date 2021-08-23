@@ -1,24 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState, useRef } from "react";
+import Forecast from "./components/Forecast";
+import Sidebar from "./components/Sidebar";
+import Weather from "./components/Weather";
+import GlobalStyle from "./styles/globalStyles";
 
 function App() {
+  const [data, setData] = useState([]);
+  const [menu, setMenu] = useState(false);
+  const [woeid, setWoeid] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const handleSearch = (e) => {
+    console.log(e.target.defaultValue);
+    setWoeid(e.target.defaultValue);
+  };
+
+  const handleMenu = () => {
+    setMenu(!menu);
+  };
+
+  const getData = async (woeidText) => {
+    try {
+      const response = await fetch(
+        `https://www.metaweather.com/api/location/${
+          woeidText ? woeidText : 418440
+        }/`
+      );
+      const json = await response.json();
+      setData(json);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getData(woeid);
+  }, [woeid]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <div className="App">
+        <Sidebar
+          menu={menu}
+          handleMenu={handleMenu}
+          handleSearch={handleSearch}
+        />
+        {loading ? (
+          <h3>Cargando...</h3>
+        ) : (
+          <>
+            <Weather {...data} handleMenu={handleMenu} />
+            <Forecast {...data} />
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
