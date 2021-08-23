@@ -24,7 +24,7 @@ const configStyle = {
     h1: `bold 14.4rem / 9.8rem ${fontBase}`,
     h2: `bold 4.8rem / 5.6rem ${fontBase}`,
     h3: `bold 3.6rem / 4.2rem ${fontBase}`,
-    h4: `bold 1.8rem / 150% ${fontBase}`,
+    h4: `bold 2.4rem / 150% ${fontBase}`,
     h5: `bold 1.6rem / 150% ${fontBase}`,
     body1: `normal 1.8rem / 150% ${fontBase}`,
     body2: `normal 1.6rem / 150% ${fontBase}`,

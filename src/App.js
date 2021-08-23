@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Forecast from "./components/Forecast";
+import Highlights from "./components/Highlights";
 import Sidebar from "./components/Sidebar";
 import Weather from "./components/Weather";
 import GlobalStyle from "./styles/globalStyles";
@@ -53,6 +54,7 @@ function App() {
           <>
             <Weather {...data} handleMenu={handleMenu} />
             <Forecast {...data} />
+            <Highlights {...data} />
           </>
         )}
       </div>
