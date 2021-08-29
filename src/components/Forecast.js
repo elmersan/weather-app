@@ -1,14 +1,25 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import media from "../styles/mediaQueries";
 import ForecastItem from "./ForecastItem";
 
-export default function Forecast({ consolidated_weather = [] }) {
+export default function Forecast({ unit }) {
+  const dataWeather = useSelector((state) => state.weather);
+  const { consolidated_weather } = dataWeather;
+
+  if (consolidated_weather === undefined) return "";
+
   return (
     <ForecastStyle>
       <div className="wrapper">
         <div className="forecast-content">
           {consolidated_weather.map((item, index) =>
-            index !== 0 ? <ForecastItem key={index} {...item} /> : ""
+            index !== 0 ? (
+              <ForecastItem unit={unit} key={index} {...item} />
+            ) : (
+              ""
+            )
           )}
         </div>
       </div>
@@ -25,5 +36,8 @@ const ForecastStyle = styled.div`
     align-items: center;
     flex-wrap: wrap;
     gap: 2.5rem;
+    ${media.desktop} {
+      justify-content: center;
+    }
   }
 `;

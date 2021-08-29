@@ -1,40 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import configStyle from "../styles/configStyle";
 import media from "../styles/mediaQueries";
 import Icon from "@material-ui/core/Icon";
 import Search from "./Search";
 import CurrentData from "./CurrentData";
+import { useDispatch, useSelector } from "react-redux";
+import { initWeather } from "../redux/reducers/citiesReducer";
 
-const Sidebar = ({ menu, handleMenu, handleSearch }) => {
-  const [dataCity, setDataCity] = useState([]);
-  const [textInput, setTextInput] = useState("");
-
+const Sidebar = ({ handleSearch, menu, handleMenu }) => {
+  const dispatch = useDispatch();
+  const dataCity = useSelector((state) => state.cities);
   const handleChange = (e) => {
-    setTextInput(e.target.value);
+    dispatch(initWeather(e.target.value));
   };
-
-  const getCity = async (name) => {
-    try {
-      const response = await fetch(
-        `https://www.metaweather.com/api/location/search/?query=${
-          name ? name : "lima"
-        }`
-      );
-      const json = await response.json();
-      setDataCity(json);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getCity(textInput);
-  }, [textInput]);
 
   return (
     <AsideStyle
-      className={` ${menu ? "show-sidebar" : ""}`}
+      className={`aside ${menu ? "show-sidebar" : ""}`}
       style={{ zIndex: "1" }}
     >
       <div className="wrapper">
@@ -66,6 +49,21 @@ const AsideStyle = styled.aside`
   opacity: 0;
   transform: translateX(-100%);
   overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888aa2;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+    padding: 1px;
+  }
+
   ${media.desktop} {
     transform: translateX(-100%);
   }
@@ -82,6 +80,7 @@ const AsideStyle = styled.aside`
     p {
       text-align: end;
       button {
+        cursor: pointer;
         background: no-repeat;
         color: white;
         outline: none;

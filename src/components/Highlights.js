@@ -1,9 +1,15 @@
 import { Icon } from "@material-ui/core";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import configStyle from "../styles/configStyle";
+import media from "../styles/mediaQueries";
 
-export default function Highlights({ consolidated_weather = [] }) {
+export default function Highlights() {
+  const dataWeather = useSelector((state) => state.weather);
+  const { consolidated_weather } = dataWeather;
+
+  if (consolidated_weather === undefined) return "";
   const {
     wind_speed,
     wind_direction_compass,
@@ -17,7 +23,7 @@ export default function Highlights({ consolidated_weather = [] }) {
         <div className="highlights-content">
           <h4>Today’s Hightlights </h4>
           <div className="items">
-            <div>
+            <div className="highlight-item">
               <p>Wind status</p>
               <p>
                 {wind_speed.toFixed()}
@@ -28,7 +34,7 @@ export default function Highlights({ consolidated_weather = [] }) {
                 {wind_direction_compass}
               </p>
             </div>
-            <div>
+            <div className="highlight-item">
               <p>Humidity</p>
               <p>
                 {humidity}
@@ -41,21 +47,24 @@ export default function Highlights({ consolidated_weather = [] }) {
                   <span>100</span>
                 </div>
                 <div className="progress-bar">
-                  <div className="progress-percentage"></div>
+                  <div
+                    className="progress-percentage"
+                    style={{ width: `${humidity}%` }}
+                  ></div>
                 </div>
                 <div>
                   <span>%</span>
                 </div>
               </ProgressStyle>
             </div>
-            <div>
+            <div className="highlight-item">
               <p>Visibility</p>
               <p>
                 {visibility.toFixed(1)}
                 <span> miles</span>
               </p>
             </div>
-            <div>
+            <div className="highlight-item">
               <p>Air Pressure</p>
               <p>
                 {air_pressure}
@@ -73,6 +82,9 @@ const HighlightsStyle = styled.div`
   h4 {
     text-align: start;
     font: ${configStyle.text.h4};
+    ${media.desktop} {
+      padding-inline-start: 4rem;
+    }
   }
   color: ${configStyle.colors.Gray10};
   .highlights-content {
@@ -85,10 +97,21 @@ const HighlightsStyle = styled.div`
       align-items: stretch;
       flex-flow: column wrap;
       gap: 3.2rem;
-      div {
+      ${media.desktop} {
+        flex-flow: initial;
+        flex-wrap: wrap;
+      }
+      .highlight-item {
         background: ${configStyle.colors.BlackSecondary};
         text-align: center;
         padding-block: 2.2rem 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        ${media.desktop} {
+          max-inline-size: 32.8rem;
+          min-inline-size: 32.8rem;
+        }
         .progress {
           div {
             padding-block: 0;

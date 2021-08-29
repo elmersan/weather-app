@@ -1,51 +1,75 @@
-import React from "react";
 import styled from "styled-components";
-import showerImg from "../assets/forecast/Shower.png";
 import backgroundImage from "../assets/forecast/Cloud-background.png";
 import configStyle from "../styles/configStyle";
 import Icon from "@material-ui/core/Icon";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { Convert } from "../hooks/useConvert";
 
-export default function Weather({
-  consolidated_weather = [],
-  title,
-  handleMenu,
-}) {
+const ForecastImage = require.context("../assets/forecast", true);
+
+export default function Weather({ unit, handleMenu }) {
+  const dataWeather = useSelector((state) => state.weather);
+  const { consolidated_weather } = dataWeather;
+
+  if (consolidated_weather === undefined) return "";
+  const { title } = dataWeather;
   const { the_temp, weather_state_name, applicable_date } =
     consolidated_weather[0];
 
+  const nameImage = weather_state_name.replace(/ /g, "");
+
   return (
-    <WeatherStyle>
-      <div className="wrapper" style={{ paddingInline: "0" }}>
-        <div className="weather-content">
-          <header>
-            <button onClick={handleMenu}>Search for pleaces</button>
-            <button className="icon">
-              <Icon>my_location</Icon>
-            </button>
-          </header>
-          <div></div>
-          <div className="image">
-            <img src={showerImg} alt="shower" />
+    <>
+      {consolidated_weather ? (
+        <WeatherStyle>
+          <div className="wrapper" style={{ paddingInline: "0" }}>
+            <div className="weather-content">
+              <header>
+                <button onClick={handleMenu}>Search for pleaces</button>
+                <button className="icon">
+                  <Icon>my_location</Icon>
+                </button>
+              </header>
+              <div></div>
+              <div className="image">
+                <img
+                  src={ForecastImage(`./${nameImage}.png`).default}
+                  alt="heavy rain"
+                />
+              </div>
+              <div className="description">
+                <h1>
+                  {unit ? (
+                    <>
+                      {Convert(the_temp)}
+                      <span>°F</span>
+                    </>
+                  ) : (
+                    <>
+                      {the_temp.toFixed()}
+                      <span>°C</span>
+                    </>
+                  )}
+                </h1>
+                <h3>{weather_state_name}</h3>
+                <p>
+                  <span>Today</span>
+                  <span className="point">•</span>
+                  {moment(applicable_date).format("ddd,D MMM ")}
+                </p>
+                <p style={{ fontWeight: "600" }}>
+                  <Icon>place</Icon>
+                  {title}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="description">
-            <h1>
-              {the_temp.toFixed()} <span>°C</span>
-            </h1>
-            <h3>{weather_state_name}</h3>
-            <p>
-              <span>Today</span>
-              <span className="point">•</span>
-              {moment(applicable_date).format("ddd,D MMM ")}
-            </p>
-            <p style={{ fontWeight: "600" }}>
-              <Icon>place</Icon>
-              {title}
-            </p>
-          </div>
-        </div>
-      </div>
-    </WeatherStyle>
+        </WeatherStyle>
+      ) : (
+        "cargando"
+      )}
+    </>
   );
 }
 
@@ -61,6 +85,7 @@ export const WeatherStyle = styled.div`
       align-items: center;
       padding-inline: 1.6rem;
       button {
+        cursor: pointer;
         padding-block: 1.1rem;
         padding-inline: 1.8rem;
         outline: none;
