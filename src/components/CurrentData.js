@@ -1,7 +1,5 @@
-import React from "react";
-import styled from "styled-components";
 import Icon from "@material-ui/core/Icon";
-import configStyle from "../styles/configStyle";
+import { DataListStyle } from "../styles/components";
 
 export default function CurrentData({ handleSearch, dataCity }) {
   return (
@@ -22,37 +20,3 @@ export default function CurrentData({ handleSearch, dataCity }) {
     </DataListStyle>
   );
 }
-
-const DataListStyle = styled.div`
-  &,
-  label {
-    display: flex;
-  }
-  flex-direction: column;
-  label {
-    justify-content: space-between;
-    align-items: center;
-    padding-block: 2.2rem;
-    padding-inline: 1.2rem;
-    box-sizing: border-box;
-    cursor: pointer;
-    border: 1px solid transparent;
-    &:hover {
-      transition: ${configStyle.transition.smoot};
-      border: 1px solid ${configStyle.colors.Gray10};
-      box-sizing: border-box;
-    }
-    input {
-      opacity: 0;
-    }
-    span.value {
-      color: ${configStyle.colors.Gray10};
-      font: ${configStyle.text.body2};
-    }
-    span {
-      &:nth-last-child(1) {
-        color: ${configStyle.colors.Gray40};
-      }
-    }
-  }
-`;

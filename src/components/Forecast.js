@@ -1,8 +1,6 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
-import media from "../styles/mediaQueries";
 import ForecastItem from "./ForecastItem";
+import { ForecastStyle } from "../styles/components";
 
 export default function Forecast({ unit }) {
   const dataWeather = useSelector((state) => state.weather);
@@ -26,18 +24,3 @@ export default function Forecast({ unit }) {
     </ForecastStyle>
   );
 }
-
-const ForecastStyle = styled.div`
-  .forecast-content {
-    padding-inline: 3.9rem;
-    padding-block: 5.2rem;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2.5rem;
-    ${media.desktop} {
-      justify-content: center;
-    }
-  }
-`;

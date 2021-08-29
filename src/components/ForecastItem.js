@@ -1,8 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import configStyle from "../styles/configStyle";
 import moment from "moment";
 import { Convert } from "../hooks/useConvert";
+import { ForecastItemStyle } from "../styles/components";
 
 const ForecastImage = require.context("../assets/forecast", true);
 
@@ -34,37 +32,3 @@ export default function ForecastItem({
     </ForecastItemStyle>
   );
 }
-
-const ForecastItemStyle = styled.div`
-  background: ${configStyle.colors.BlackSecondary};
-  max-inline-size: 12rem;
-  min-inline-size: 12rem;
-  min-block-size: 17.7rem;
-  max-block-size: 17.7rem;
-  padding-inline: 1.5rem;
-  padding-block: 1.6rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  p {
-    margin: 0;
-    color: ${configStyle.colors.Gray10};
-    margin-block-end: 1rem;
-    &.temp {
-      margin: 0;
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-    span {
-      &:nth-child(2) {
-        color: ${configStyle.colors.Gray20};
-      }
-    }
-  }
-
-  img {
-    width: 5.6rem;
-  }
-`;
