@@ -3,6 +3,22 @@ import configStyle from "./configStyle";
 import media from "./mediaQueries";
 import backgroundImage from "../assets/forecast/Cloud-background.png";
 
+export const LoadingStyle = styled.div`
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: ${configStyle.colors.Black};
+  color: ${configStyle.colors.Gray10};
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  transition: all 0.3s ease-in-out;
+`;
+
 export const ButtonStyle = styled.button`
   background: #585676;
   border-radius: 50%;

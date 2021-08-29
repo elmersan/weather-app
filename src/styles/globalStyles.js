@@ -48,6 +48,12 @@ const GlobalStyle = createGlobalStyle`
       padding-inline: 3rem;
     }
   }
+
+  .hide{
+    opacity:0;
+    transform: translateY(-100%);
+    transition:all 0.3s ease-in-out;
+  }
 `;
 
 export default GlobalStyle;
