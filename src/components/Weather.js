@@ -6,7 +6,7 @@ import { WeatherStyle } from "../styles/components";
 
 const ForecastImage = require.context("../assets/forecast", true);
 
-export default function Weather({ unit, handleMenu }) {
+export default function Weather({ unit, handleMenu, getLocation }) {
   const dataWeather = useSelector((state) => state.weather);
   const { consolidated_weather } = dataWeather;
 
@@ -19,54 +19,50 @@ export default function Weather({ unit, handleMenu }) {
 
   return (
     <>
-      {consolidated_weather ? (
-        <WeatherStyle>
-          <div className="wrapper" style={{ paddingInline: "0" }}>
-            <div className="weather-content">
-              <header>
-                <button onClick={handleMenu}>Search for pleaces</button>
-                <button className="icon">
-                  <Icon>my_location</Icon>
-                </button>
-              </header>
-              <div></div>
-              <div className="image">
-                <img
-                  src={ForecastImage(`./${nameImage}.png`).default}
-                  alt="heavy rain"
-                />
-              </div>
-              <div className="description">
-                <h1>
-                  {unit ? (
-                    <>
-                      {Convert(the_temp)}
-                      <span>°F</span>
-                    </>
-                  ) : (
-                    <>
-                      {the_temp.toFixed()}
-                      <span>°C</span>
-                    </>
-                  )}
-                </h1>
-                <h3>{weather_state_name}</h3>
-                <p>
-                  <span>Today</span>
-                  <span className="point">•</span>
-                  {moment(applicable_date).format("ddd,D MMM ")}
-                </p>
-                <p style={{ fontWeight: "600" }}>
-                  <Icon>place</Icon>
-                  {title}
-                </p>
-              </div>
+      <WeatherStyle>
+        <div className="wrapper" style={{ paddingInline: "0" }}>
+          <div className="weather-content">
+            <header>
+              <button onClick={handleMenu}>Search for pleaces</button>
+              <button className="icon" onClick={getLocation}>
+                <Icon>my_location</Icon>
+              </button>
+            </header>
+            <div></div>
+            <div className="image">
+              <img
+                src={ForecastImage(`./${nameImage}.png`).default}
+                alt="heavy rain"
+              />
+            </div>
+            <div className="description">
+              <h1>
+                {unit ? (
+                  <>
+                    {Convert(the_temp)}
+                    <span>°F</span>
+                  </>
+                ) : (
+                  <>
+                    {the_temp.toFixed()}
+                    <span>°C</span>
+                  </>
+                )}
+              </h1>
+              <h3>{weather_state_name}</h3>
+              <p>
+                <span>Today</span>
+                <span className="point">•</span>
+                {moment(applicable_date).format("ddd,D MMM ")}
+              </p>
+              <p style={{ fontWeight: "600" }}>
+                <Icon>place</Icon>
+                {title}
+              </p>
             </div>
           </div>
-        </WeatherStyle>
-      ) : (
-        "cargando"
-      )}
+        </div>
+      </WeatherStyle>
     </>
   );
 }

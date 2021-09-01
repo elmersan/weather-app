@@ -205,6 +205,9 @@ export const FooterStyle = styled.div`
     color: ${configStyle.colors.Gray10};
     span {
       font-weight: 700;
+      a {
+        color: ${configStyle.colors.Gray10};
+      }
     }
   }
 `;
@@ -214,7 +217,7 @@ export const ForecastStyle = styled.div`
     padding-inline: 3.9rem;
     padding-block: 5.2rem;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 2.5rem;
@@ -296,6 +299,7 @@ export const FormStyle = styled.form`
     color: ${configStyle.colors.Gray10};
     font: ${configStyle.text.body2};
     font-weight: 600;
+    cursor: pointer;
   }
 `;
 
@@ -357,6 +361,11 @@ export const AsideStyle = styled.aside`
 
 export const WeatherStyle = styled.div`
   background: ${configStyle.colors.BlackSecondary};
+  ${media.desktop} {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
   .weather-content {
     padding-block-start: 1.8rem;
     text-align: center;

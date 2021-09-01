@@ -2,8 +2,11 @@ import Icon from "@material-ui/core/Icon";
 import { FormStyle } from "../styles/components";
 
 export default function Search({ handleChange }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
-    <FormStyle action="">
+    <FormStyle onSubmit={handleSubmit}>
       <label htmlFor="text">
         <Icon>search</Icon>
         <input

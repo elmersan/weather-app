@@ -9,7 +9,7 @@ const Sidebar = ({ handleSearch, menu, handleMenu }) => {
   const dispatch = useDispatch();
   const dataCity = useSelector((state) => state.cities);
   const handleChange = (e) => {
-    dispatch(initWeather(e.target.value));
+    if (e.target.value !== "") dispatch(initWeather(e.target.value));
   };
 
   return (
